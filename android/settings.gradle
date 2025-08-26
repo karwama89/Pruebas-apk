@@ -1,3 +1,24 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+        maven { url("$rootDir/../node_modules/react-native/android") }
+    }
+    includeBuild("../node_modules/react-native-gradle-plugin")
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        google()
+        maven { url("$rootDir/../node_modules/react-native/android") }
+        maven { url("$rootDir/../node_modules/jsc-android/dist") }
+        maven { url 'https://www.jitpack.io' }
+    }
+}
+
 rootProject.name = 'plant-identifier-mx'
 include ':app'
 

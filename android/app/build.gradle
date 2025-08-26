@@ -1,6 +1,17 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
-apply plugin: "com.google.gms.google-services"
+
+def googleServicesJson = file('src/google-services.json')
+if (googleServicesJson.exists()) {
+    def googleServicesFile = file("google-services.json")
+if (googleServicesFile.exists()) {
+    apply plugin: "com.google.gms.google-services"
+} else {
+    println("google-services.json not found. Skipping Google Services plugin.")
+}
+} else {
+    println("[build.gradle] google-services.json not found; skipping Google Services plugin")
+}
 
 import com.android.build.OutputFile
 
@@ -187,4 +198,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+def rnCliNativeModules = file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle")
+if (rnCliNativeModules.exists()) {
+    apply from: rnCliNativeModules
+    applyNativeModulesAppBuildGradle(project)
+} else {
+    println("[build.gradle] native_modules.gradle not found; skipping RN autolinking")
+}
